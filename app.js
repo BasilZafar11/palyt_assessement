@@ -63,6 +63,17 @@ function renderMenu() {
     });
 }
 
+function getIngredientDependencies(name) {
+    return recipes
+        .filter((recipe) =>
+            recipe.ingredients.some(
+                (ingredient) =>
+                    ingredient.name.toLowerCase() === name.toLowerCase()
+            )
+        )
+        .map((recipe) => recipe.dish);
+}
+
 function renderStock() {
     const tableBody = document.getElementById("stock-table-body");
 
@@ -89,6 +100,11 @@ function renderStock() {
                 <button class="edit-button" onclick="editIngredient(${index})">
                     Edit
                 </button>
+                
+                <button class="delete-button" onclick="deleteIngredient(${index})">
+                    Delete
+                </button>
+
             </td>
         `;
 
@@ -138,6 +154,31 @@ function editIngredient(index) {
     renderMenu();
 }
 
+function deleteIngredient(index) {
+    const ingredient = stock[index];
+    const dependencies = getIngredientDependencies(ingredient.name);
+
+    if (dependencies.length > 0) {
+        alert(
+            `${ingredient.name} cannot be deleted because it is used by: ${dependencies.join(", ")}`
+        );
+        return;
+    }
+
+    const confirmed = confirm(
+        `Delete ${ingredient.name} from stock?`
+    );
+
+    if (!confirmed) {
+        return;
+    }
+
+    stock.splice(index, 1);
+
+    renderStock();
+    renderMenu();
+}
+
 function addIngredient() {
     const name = prompt("Enter ingredient name:");
 
@@ -149,6 +190,15 @@ function addIngredient() {
 
     if (!trimmedName) {
         alert("Ingredient name cannot be empty.");
+        return;
+    }
+
+    const duplicateIngredient = stock.some(
+        (ingredient) =>
+            ingredient.name.toLowerCase() === trimmedName.toLowerCase());
+
+    if (duplicateIngredient) {
+        alert("An ingredient with this name already exists.");
         return;
     }
 
@@ -172,6 +222,13 @@ function addIngredient() {
     }
 
     const normalizedUnit = unit.trim().toLowerCase();
+
+    const allowedUnits = ["g", "kg", "ml", "l"];
+
+    if (!allowedUnits.includes(normalizedUnit)) {
+        alert("Unit must be g, kg, ml, or l.");
+        return;
+    }
 
     const parInput = prompt("Enter par level:");
 

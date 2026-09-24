@@ -155,3 +155,17 @@ th {
 .add-button:hover {
     background: #f2f2f2;
 }
+
+.delete-button {
+    margin-left: 6px;
+    padding: 6px 10px;
+    border: 1px solid #b42318;
+    border-radius: 4px;
+    background: white;
+    color: #b42318;
+    cursor: pointer;
+}
+
+.delete-button:hover {
+    background: #f8eeee;
+}
