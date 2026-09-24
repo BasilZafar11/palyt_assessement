@@ -123,3 +123,22 @@ th {
 .menu-unavailable {
     color: #b42318;
 }
+
+.order-button {
+    display: block;
+    margin-top: 10px;
+    padding: 7px 14px;
+    border: 1px solid #333;
+    border-radius: 4px;
+    background: white;
+    cursor: pointer;
+}
+
+.order-button:hover:not(:disabled) {
+    background: #f2f2f2;
+}
+
+.order-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}

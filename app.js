@@ -36,7 +36,7 @@ function renderMenu() {
 
     menuList.innerHTML = "";
 
-    recipes.forEach((recipe) => {
+    recipes.forEach((recipe,index) => {
         const available = isDishAvailable(recipe);
 
         const menuItem = document.createElement("div");
@@ -50,6 +50,12 @@ function renderMenu() {
                     available ? "menu-available" : "menu-unavailable"}">
                     ${available ? "Available" : "Unavailable"}
                 </span>
+                <button
+                    class="order-button"
+                    onclick="placeOrder(${index})"
+                    ${available ? "" : "disabled"}>
+                    Order
+                </button>
             </div>
         `;
 
@@ -176,4 +182,57 @@ function isDishAvailable(recipe) {
 
         return stockIngredient.qty >= stockIngredient.par;
     });
+}
+
+function placeOrder(recipeIndex) {
+    const recipe = recipes[recipeIndex];
+
+    if (!isDishAvailable(recipe)) {
+        alert(`${recipe.dish} is currently unavailable.`);
+        return;
+    }
+
+    for (const recipeIngredient of recipe.ingredients) {
+        const stockIngredient = findStockIngredient(recipeIngredient.name);
+
+        if (!stockIngredient) {
+            alert(`${recipeIngredient.name} is missing from stock.`);
+            return;
+        }
+
+        let requiredQuantity;
+
+        try {
+            requiredQuantity = convertQuantity(
+                recipeIngredient.qty,
+                recipeIngredient.unit,
+                stockIngredient.unit
+            );
+        } catch (error) {
+            alert(error.message);
+            return;
+        }
+
+        if (stockIngredient.qty < requiredQuantity) {
+            alert(`Not enough ${stockIngredient.name} to complete this order.`);
+            return;
+        }
+    }
+
+    recipe.ingredients.forEach((recipeIngredient) => {const stockIngredient = findStockIngredient(recipeIngredient.name);
+
+        const requiredQuantity = convertQuantity(
+            recipeIngredient.qty,
+            recipeIngredient.unit,
+            stockIngredient.unit
+        );
+
+        stockIngredient.qty -= requiredQuantity;
+
+        stockIngredient.qty = Math.round(stockIngredient.qty * 1000) / 1000;
+    });
+
+    renderStock();
+
+    alert(`${recipe.dish} ordered successfully.`);
 }
