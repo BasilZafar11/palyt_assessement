@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Palyt Kitchen Inventory</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <main class="container">
+    <header>
+        <h1>Kitchen Inventory</h1>
+        <p>Manage stock and monitor the diner menu</p>
+    </header>
+
+    <div class="dashboard">
+        <section class="stock-section">
+            <h2>Stock</h2>
+            <button class="add-button" onclick="addIngredient()">
+                Add Ingredient
+            </button>
+
+            <input
+                type="text"
+                id="stock-search"
+                placeholder="Search ingredients..."
+                oninput="renderStock()"
+            />
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Ingredient</th>
+                        <th>Quantity</th>
+                        <th>Unit</th>
+                        <th>Par Level</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody id="stock-table-body"></tbody>
+            </table>
+        </section>
+
+        <section class="menu-section">
+            <h2>Diner Menu</h2>
+            <div id="menu-list"></div>
+        </section>
+    </div>
+</main>
+
+    <script src="app.js"></script>
+</body>
+</html>
