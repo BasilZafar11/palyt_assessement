@@ -233,6 +233,7 @@ function placeOrder(recipeIndex) {
     });
 
     renderStock();
+    renderMenu();
 
     alert(`${recipe.dish} ordered successfully.`);
 }
