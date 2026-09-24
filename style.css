@@ -142,3 +142,16 @@ th {
     cursor: not-allowed;
     opacity: 0.5;
 }
+
+.add-button {
+    margin: 12px 0 18px;
+    padding: 8px 14px;
+    border: 1px solid #333;
+    border-radius: 4px;
+    background: white;
+    cursor: pointer;
+}
+
+.add-button:hover {
+    background: #f2f2f2;
+}

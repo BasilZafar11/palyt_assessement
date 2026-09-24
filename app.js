@@ -138,6 +138,65 @@ function editIngredient(index) {
     renderMenu();
 }
 
+function addIngredient() {
+    const name = prompt("Enter ingredient name:");
+
+    if (name === null) {
+        return;
+    }
+
+    const trimmedName = name.trim();
+
+    if (!trimmedName) {
+        alert("Ingredient name cannot be empty.");
+        return;
+    }
+
+    const quantityInput = prompt("Enter quantity:");
+
+    if (quantityInput === null) {
+        return;
+    }
+
+    const quantity = Number(quantityInput);
+
+    if (!Number.isFinite(quantity) || quantity < 0) {
+        alert("Please enter a valid quantity.");
+        return;
+    }
+
+    const unit = prompt("Enter unit (g, kg, ml, or l):");
+
+    if (unit === null) {
+        return;
+    }
+
+    const normalizedUnit = unit.trim().toLowerCase();
+
+    const parInput = prompt("Enter par level:");
+
+    if (parInput === null) {
+        return;
+    }
+
+    const par = Number(parInput);
+
+    if (!Number.isFinite(par) || par < 0) {
+        alert("Please enter a valid par level.");
+        return;
+    }
+
+    stock.push({
+        name: trimmedName,
+        qty: quantity,
+        unit: normalizedUnit,
+        par: par
+    });
+
+    renderStock();
+    renderMenu();
+}
+
 loadStock();
 loadRecipes();
 
