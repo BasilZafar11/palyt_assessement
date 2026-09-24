@@ -108,3 +108,18 @@ th {
         grid-template-columns: 1fr;
     }
 }
+
+.menu-status {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.menu-available {
+    color: #247a3c;
+}
+
+.menu-unavailable {
+    color: #b42318;
+}

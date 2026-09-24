@@ -37,6 +37,8 @@ function renderMenu() {
     menuList.innerHTML = "";
 
     recipes.forEach((recipe) => {
+        const available = isDishAvailable(recipe);
+
         const menuItem = document.createElement("div");
         menuItem.className = "menu-item";
 
@@ -44,6 +46,10 @@ function renderMenu() {
             <div>
                 <h3>${recipe.dish}</h3>
                 <p>₹${recipe.price}</p>
+                <span class="menu-status ${
+                    available ? "menu-available" : "menu-unavailable"}">
+                    ${available ? "Available" : "Unavailable"}
+                </span>
             </div>
         `;
 
@@ -123,6 +129,7 @@ function editIngredient(index) {
     ingredient.par = par;
 
     renderStock();
+    renderMenu();
 }
 
 loadStock();
@@ -157,4 +164,16 @@ function findStockIngredient(name) {
         (ingredient) =>
             ingredient.name.toLowerCase() === name.toLowerCase()
     );
+}
+
+function isDishAvailable(recipe) {
+    return recipe.ingredients.every((recipeIngredient) => {
+        const stockIngredient = findStockIngredient(recipeIngredient.name);
+
+        if (!stockIngredient) {
+            return false;
+        }
+
+        return stockIngredient.qty >= stockIngredient.par;
+    });
 }
