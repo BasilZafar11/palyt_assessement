@@ -20,14 +20,28 @@ function renderStock() {
 
     tableBody.innerHTML = "";
 
-    stock.forEach((ingredient) => {
+    stock.forEach((ingredient, index) => {
         const row = document.createElement("tr");
+
+        const isLowStock = ingredient.qty < ingredient.par;
+        const statusText = isLowStock ? "Low Stock" : "In Stock";
+        const statusClass = isLowStock ? "status-low" : "status-ok";
 
         row.innerHTML = `
             <td>${ingredient.name}</td>
             <td>${ingredient.qty}</td>
             <td>${ingredient.unit}</td>
             <td>${ingredient.par}</td>
+            <td>
+                <span class="stock-status ${statusClass}">
+                    ${statusText}
+                </span>
+            </td>
+            <td>
+                <button class="edit-button" data-index="${index}">
+                    Edit
+                </button>
+            </td>
         `;
 
         tableBody.appendChild(row);
