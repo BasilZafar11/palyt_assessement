@@ -9,11 +9,12 @@
 
 <body>
     <main class="container">
-        <header>
-            <h1>Kitchen Inventory</h1>
-            <p>Current ingredient stock and par levels</p>
-        </header>
+    <header>
+        <h1>Kitchen Inventory</h1>
+        <p>Manage stock and monitor the diner menu</p>
+    </header>
 
+    <div class="dashboard">
         <section class="stock-section">
             <h2>Stock</h2>
 
@@ -29,11 +30,16 @@
                     </tr>
                 </thead>
 
-                <tbody id="stock-table-body">
-                </tbody>
+                <tbody id="stock-table-body"></tbody>
             </table>
         </section>
-    </main>
+
+        <section class="menu-section">
+            <h2>Diner Menu</h2>
+            <div id="menu-list"></div>
+        </section>
+    </div>
+</main>
 
     <script src="app.js"></script>
 </body>

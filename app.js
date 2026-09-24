@@ -1,4 +1,5 @@
 let stock = [];
+let recipes = [];
 
 async function loadStock() {
     try {
@@ -13,6 +14,41 @@ async function loadStock() {
     } catch (error) {
         console.error("Error loading stock:", error);
     }
+}
+
+async function loadRecipes() {
+    try {
+        const response = await fetch("recipes.json");
+
+        if (!response.ok) {
+            throw new Error("Could not load recipe data");
+        }
+
+        recipes = await response.json();
+        renderMenu();
+    } catch (error) {
+        console.error("Error loading recipes:", error);
+    }
+}
+
+function renderMenu() {
+    const menuList = document.getElementById("menu-list");
+
+    menuList.innerHTML = "";
+
+    recipes.forEach((recipe) => {
+        const menuItem = document.createElement("div");
+        menuItem.className = "menu-item";
+
+        menuItem.innerHTML = `
+            <div>
+                <h3>${recipe.dish}</h3>
+                <p>₹${recipe.price}</p>
+            </div>
+        `;
+
+        menuList.appendChild(menuItem);
+    });
 }
 
 function renderStock() {
@@ -90,3 +126,4 @@ function editIngredient(index) {
 }
 
 loadStock();
+loadRecipes();
