@@ -38,7 +38,7 @@ function renderStock() {
                 </span>
             </td>
             <td>
-                <button class="edit-button" data-index="${index}">
+                <button class="edit-button" onclick="editQuantity(${index})">
                     Edit
                 </button>
             </td>
@@ -46,6 +46,30 @@ function renderStock() {
 
         tableBody.appendChild(row);
     });
+}
+
+function editQuantity(index) {
+    const ingredient = stock[index];
+
+    const newQuantity = prompt(
+        `Enter new quantity for ${ingredient.name} (${ingredient.unit}):`,
+        ingredient.qty
+    );
+
+    if (newQuantity === null) {
+        return;
+    }
+
+    const quantity = Number(newQuantity);
+
+    if (!Number.isFinite(quantity) || quantity < 0) {
+        alert("Please enter a valid quantity.");
+        return;
+    }
+
+    ingredient.qty = quantity;
+
+    renderStock();
 }
 
 loadStock();
