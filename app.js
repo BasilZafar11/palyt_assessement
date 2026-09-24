@@ -38,7 +38,7 @@ function renderStock() {
                 </span>
             </td>
             <td>
-                <button class="edit-button" onclick="editQuantity(${index})">
+                <button class="edit-button" onclick="editIngredient(${index})">
                     Edit
                 </button>
             </td>
@@ -48,11 +48,11 @@ function renderStock() {
     });
 }
 
-function editQuantity(index) {
+function editIngredient(index) {
     const ingredient = stock[index];
 
     const newQuantity = prompt(
-        `Enter new quantity for ${ingredient.name} (${ingredient.unit}):`,
+        `Enter quantity for ${ingredient.name} (${ingredient.unit}):`,
         ingredient.qty
     );
 
@@ -67,7 +67,24 @@ function editQuantity(index) {
         return;
     }
 
+    const newPar = prompt(
+        `Enter par level for ${ingredient.name} (${ingredient.unit}):`,
+        ingredient.par
+    );
+
+    if (newPar === null) {
+        return;
+    }
+
+    const par = Number(newPar);
+
+    if (!Number.isFinite(par) || par < 0) {
+        alert("Please enter a valid par level.");
+        return;
+    }
+
     ingredient.qty = quantity;
+    ingredient.par = par;
 
     renderStock();
 }
