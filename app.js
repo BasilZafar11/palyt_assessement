@@ -76,10 +76,22 @@ function getIngredientDependencies(name) {
 
 function renderStock() {
     const tableBody = document.getElementById("stock-table-body");
+    const searchInput = document.getElementById("stock-search");
+
+    const searchTerm = searchInput
+        ? searchInput.value.trim().toLowerCase()
+        : "";
 
     tableBody.innerHTML = "";
 
     stock.forEach((ingredient, index) => {
+        if (
+            searchTerm &&
+            !ingredient.name.toLowerCase().includes(searchTerm)
+        ) {
+            return;
+        }
+        
         const row = document.createElement("tr");
 
         const isLowStock = ingredient.qty < ingredient.par;

@@ -169,3 +169,11 @@ th {
 .delete-button:hover {
     background: #f8eeee;
 }
+
+#stock-search {
+    width: 220px;
+    margin: 12px 0 18px 10px;
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
