@@ -127,3 +127,34 @@ function editIngredient(index) {
 
 loadStock();
 loadRecipes();
+
+function convertQuantity(quantity, fromUnit, toUnit) {
+    if (fromUnit === toUnit) {
+        return quantity;
+    }
+
+    if (fromUnit === "kg" && toUnit === "g") {
+        return quantity * 1000;
+    }
+
+    if (fromUnit === "g" && toUnit === "kg") {
+        return quantity / 1000;
+    }
+
+    if (fromUnit === "l" && toUnit === "ml") {
+        return quantity * 1000;
+    }
+
+    if (fromUnit === "ml" && toUnit === "l") {
+        return quantity / 1000;
+    }
+
+    throw new Error(`Unsupported unit conversion: ${fromUnit} to ${toUnit}`);
+}
+
+function findStockIngredient(name) {
+    return stock.find(
+        (ingredient) =>
+            ingredient.name.toLowerCase() === name.toLowerCase()
+    );
+}
